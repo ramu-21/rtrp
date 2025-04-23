@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardiac Risk Predictor 🫀</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Cardiac Risk Prediction 🫀</h1>
+        <form method="POST">
+            <input type="text" name="age" placeholder="Age" required><br>
+            <input type="text" name="sex_male" placeholder="Sex (1 = Male, 0 = Female)" required><br>
+            <input type="text" name="cigs_per_day" placeholder="Cigarettes per Day" required><br>
+            <input type="text" name="tot_chol" placeholder="Total Cholesterol (mg/dL)" required><br>
+            <input type="text" name="sys_bp" placeholder="Systolic BP (mmHg)" required><br>
+            <input type="text" name="glucose" placeholder="Glucose (mg/dL)" required><br><br>
+            <input type="submit" value="Check Risk 🔍">
+        </form>
+
+        {% if result %}
+            {% if result.prediction == 1 %}
+                <div class="result warning">
+                    ⚠️ High risk of heart disease ({{ result.probability | round(2) }}% probability)
+                </div>
+            {% else %}
+                <div class="result success">
+                    ✅ Low risk of heart disease ({{ result.probability | round(2) }}% probability)
+                </div>
+            {% endif %}
+        {% endif %}
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
